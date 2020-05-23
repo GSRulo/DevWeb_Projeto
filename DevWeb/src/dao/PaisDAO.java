@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.Pais;
@@ -14,8 +13,7 @@ public class PaisDAO {
 	// CRIAR
 	public int criar(Pais pais) {
 		String sql = "INSERT INTO paises(id, nome, populacao, area) VALUES (default,?,?,?)";
-		try (Connection conn = ConnectionFactory.obtemConexao();
-				PreparedStatement stm = conn.prepareStatement(sql);) {
+		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql);) {
 			stm.setString(1, pais.getNome());
 			stm.setLong(2, pais.getPopulacao());
 			stm.setDouble(3, pais.getArea());
@@ -66,8 +64,8 @@ public class PaisDAO {
 	public Pais carregar(int id) {
 		Pais pais = new Pais();
 		pais.setId(id);
-		String sqlSelect = "SELECT * FROM paises WHERE paises.id = ?";
-		// usando o try with resources do Java 7, que fecha o que abriu
+		String sqlSelect = "SELECT nome, populacao, area FROM paises WHERE paises.id = ?";
+		
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			stm.setInt(1, pais.getId());
@@ -91,61 +89,63 @@ public class PaisDAO {
 		return pais;
 	}
 
-	public void maiorPopulacao(Pais pais) {
-		String sqlSelect = "SELECT * FROM paises WHERE populacao = ( SELECT MAX(populacao) FROM paises )";
-		try {
-			Connection conn = ConnectionFactory.obtemConexao();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlSelect);
+	public ArrayList<Pais> listarPaises() {
+		Pais pais;
+		ArrayList<Pais> lista = new ArrayList<>();
+		String sqlSelect = "SELECT id, nome, populacao, area FROM paises";
 
-			while (rs.next()) {
-				pais.setId(rs.getInt("id"));
-				pais.setNome(rs.getString("nome"));
-				pais.setPopulacao(rs.getLong("populacao"));
-				pais.setArea(rs.getDouble("area"));
+		try (Connection conn = ConnectionFactory.obtemConexao();
+				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
+			
+			try (ResultSet rs = stm.executeQuery();) {
+				while (rs.next()) {
+					pais = new Pais();
+					pais.setId(rs.getInt("id"));
+					pais.setNome(rs.getString("nome"));
+					pais.setPopulacao(rs.getLong("populacao"));
+					pais.setArea(rs.getDouble("area"));
+					lista.add(pais);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
+			
+		} catch (SQLException e1) {
+			System.out.print(e1.getStackTrace());
 		}
+		
+		return lista;
 	}
+	
+	public ArrayList<Pais> listarPaises(String chave) {
+		Pais pais;
+		ArrayList<Pais> lista = new ArrayList<>();
+		String sqlSelect = "SELECT id, nome, populacao, area FROM paises where upper(nome) like ?";
 
-	public void menorArea(Pais pais) {
-		String sqlSelect = "SELECT * FROM paises WHERE area = ( SELECT MIN(area) FROM paises )";
-		try {
-			Connection conn = ConnectionFactory.obtemConexao();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlSelect);
-
-			while (rs.next()) {
-				pais.setId(rs.getInt("id"));
-				pais.setNome(rs.getString("nome"));
-				pais.setPopulacao(rs.getLong("populacao"));
-				pais.setArea(rs.getDouble("area"));
+		try (Connection conn = ConnectionFactory.obtemConexao();
+				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
+			stm.setString(1, "%" + chave.toUpperCase() + "%"); // String search
+			// stm.setString(2, "%" + Integer.parseInt(chave) + "%"); // Int search (Converting String to Int)
+			
+			try (ResultSet rs = stm.executeQuery();) {
+				while (rs.next()) {
+					pais = new Pais();
+					pais.setId(rs.getInt("id"));
+					pais.setNome(rs.getString("nome"));
+					pais.setPopulacao(rs.getLong("populacao"));
+					pais.setArea(rs.getDouble("area"));
+					lista.add(pais);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
+			
+		} catch (SQLException e1) {
+			System.out.print(e1.getStackTrace());
 		}
+		
+		return lista;
 	}
-
-	public ArrayList<Pais> vetorTresPaises() {
-		String sqlSelect = "SELECT * FROM paises LIMIT 3";
-		ArrayList<Pais> arrayPais = new ArrayList<>();
-
-		try (Connection conn = ConnectionFactory.obtemConexao(); Statement stmt = conn.createStatement();) {
-			ResultSet rs = stmt.executeQuery(sqlSelect);
-
-			while (rs.next()) {
-				arrayPais.add(
-						new Pais(rs.getInt("id"), rs.getString("nome"), rs.getLong("populacao"), rs.getDouble("area")));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return arrayPais;
-	}
-
 }

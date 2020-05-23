@@ -7,18 +7,19 @@
  	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Visualizar País</title>
+    <title>Visualizar Pa&iacute;s</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 	
-        <!-- Barra superior com os menus de navegação -->
-		<c:import url="Menu.jsp"/>
-        <!-- Container Principal -->
+		<!-- Import top menu bar -->
+		<c:import url="Menu.jsp" />
+	
+		<!-- Container Main -->
         <div id="main" class="container">
-            <h3 class="page-header">Visualizar País ##${pais.id} %></h3>
+            <h3 class="page-header">Visualizar Pa&iacute;s ##${pais.id} %></h3>
             <div class="row">
                 <div class="col-md-12">
                     <p><strong>Nome</strong>
@@ -30,14 +31,14 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <p><strong>População</strong>
+                    <p><strong>Popula&ccedil;&atilde;o</strong>
                     </p>
                     <p>
                         ${pais.populacao}
                     </p>
                 </div>
                 <div class="col-md-6">
-                    <p><strong>Área</strong>
+                    <p><strong>&Aacute;rea</strong>
                     </p>
                     <p>
                         ${pais.area} km<sup>2</sup>
