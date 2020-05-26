@@ -31,10 +31,10 @@
 				<div class="modal-body">Deseja realmente excluir este
 					pa&iacute;s?</div>
 				<div class="modal-footer">
-					<form action="ConsultaPais.do" method="post">
+					<form action="controller.do" method="post">
 						<input type="hidden" name="id" id="id_excluir" />
-						<button type="submit" class="btn btn-primary" name="acao"
-							value="Excluir">Sim</button>
+						<button type="submit" class="btn btn-primary" name="command"
+							value="ExcluirPais">Sim</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
 					</form>
 				</div>
@@ -47,7 +47,7 @@
 
 	<!-- Container Main -->
 	<div id="main" class="container">
-		<form action="listar_paises.do" method="post">
+		<form action="controller.do" method="post">
 			<div id="top" class="row">
 				<div class="col-md-3">
 					<h2>Paises</h2>
@@ -59,8 +59,8 @@
 							type="text"
 							placeholder="Pesquisar Paises (deixe vazio para trazer todos)">
 						<span class="input-group-btn">
-							<button class="btn btn-primary" type="submit" name="acao"
-								value="buscar">
+							<button class="btn btn-primary" type="submit" name="command"
+								value="ListarPaisBuscar">
 								<span class="glyphicon glyphicon-search"></span>
 							</button>
 						</span>
@@ -97,9 +97,9 @@
 									<td>${pais.populacao }</td>
 									<td>${pais.area }</td>
 									<td class="actions"><a class="btn btn-success btn-xs"
-										href="ConsultaPais.do?acao=Visualizar&id=${pais.id }">Visualizar</a>
+										href="controller.do?command=VisualizarPais&id=${pais.id }">Visualizar</a>
 										<a class="btn btn-warning btn-xs"
-										href="ConsultaPais.do?acao=Editar&id=${pais.id }">Editar</a>
+										href="controller.do?command=EditarPais&id=${pais.id }">Editar</a>
 										<button id="btn${pais.id }%>" type="button"
 											class="btn btn-danger btn-xs" data-toggle="modal"
 											data-target="#delete-modal" data-pais="${pais.id }">Excluir</button>

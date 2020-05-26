@@ -24,7 +24,7 @@
 		<h3 class="page-header">Incluir Pa&iacute;s</h3>
 
 		<!-- Inclusion Form -->
-		<form action="ConsultaPais.do" method="post">
+		<form action="controller.do" method="post">
 
 			<!-- Area Form -->
 			<div class="row">
@@ -50,8 +50,8 @@
 			<hr />
 			<div id="actions" class="row">
 				<div class="col-md-12">
-					<button type="submit" class="btn btn-primary" name="acao"
-						value="Criar">Salvar</button>
+					<button type="submit" class="btn btn-primary" name="command"
+						value="CriarPais">Salvar</button>
 					<a href="index.jsp" class="btn btn-primary">Cancelar</a>
 				</div>
 			</div>

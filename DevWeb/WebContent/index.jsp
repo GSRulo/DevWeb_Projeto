@@ -23,7 +23,7 @@
 	<div id="main" class="container">
 		<h3 class="page-header">Pa&iacute;s</h3>
 	</div>
-	
+
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 </body>

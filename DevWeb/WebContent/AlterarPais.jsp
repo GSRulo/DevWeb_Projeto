@@ -24,7 +24,7 @@
 	<h3 class="page-header">Alterar Pa&iacute;s #${pais.id}</h3>
 
 	<!-- Inclusion Form -->
-	<form action="ConsultaPais.do" method="post">
+	<form action="controller.do" method="post">
 
 		<!-- Area Form -->
 		<input type="hidden" name="id" value="${pais.id }" />
@@ -51,8 +51,8 @@
 		<hr />
 		<div id="actions" class="row">
 			<div class="col-md-12">
-				<button type="submit" class="btn btn-primary" name="acao"
-					value="Alterar">Salvar</button>
+				<button type="submit" class="btn btn-primary" name="command"
+					value="AlterarPais">Salvar</button>
 				<a href="ListarPaises.jsp" class="btn btn-primary">Cancelar</a>
 			</div>
 		</div>
